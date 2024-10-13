@@ -1,1 +1,65 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+:root {
+    --light-blue: #6F90D8;
+    --blue-color: #0438A7;
+    --green: #2BC48A;
+}
+
+body,
+p,
+h1,
+h2,
+h3,
+h5,
+h6 {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.img-flex {
+    flex-shrink: 0;
+    /* Prevent image from shrinking */
+}
+
+.p-checkbox .p-checkbox-box {
+    background: #E9EBEC;
+    border: none;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+    background: white;
+    border: none;
+}
+
+.p-checkbox .p-checkbox-box .p-checkbox-icon {
+    transition-duration: 0.2s;
+    color: var(--blue-color);
+    font-size: 14px;
+}
+
+.p-datatable .p-datatable-thead>tr>th {
+    text-align: left;
+    padding: 1rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-width: 0 0 1px 0;
+    font-weight: 500;
+    color: black;
+    background: transparent;
+}
+
+.p-datatable {
+    font-family: "Poppins", sans-serif;
+}
+
+.p-datatable .p-datatable-tbody>tr {
+    background-color: transparent;
+    color: black
+}
+
+.p-datatable .p-datatable-tbody>tr:hover {
+    background-color: var(--green);
+    color: white
+}
