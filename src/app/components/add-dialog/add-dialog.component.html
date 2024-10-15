@@ -1,15 +1,47 @@
-<p-dialog class="bg-white" header="Edit Profile" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
-    <span class="p-text-secondary block mb-5">add your information.</span>
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="username" class="font-semibold w-6rem">Username</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" />
+<p-dialog
+  header="Add Task"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '50%' }"
+>
+  <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-5">
+    <div class="col-12 col-lg-6">
+      <label for="username" class="fw-semibold">Task Topic</label>
+      <input
+        class="w-100"
+        pInputText
+        id="username"
+        [(ngModel)]="task_object.task_topic"
+        autocomplete="off"
+      />
     </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="email" class="font-semibold w-6rem">Email</label>
-        <input pInputText id="email" class="flex-auto" autocomplete="off" />
+    <div class="col-12 col-lg-6">
+      <label for="task_status" class="fw-semibold">Task Status</label>
+      <p-dropdown
+        class="w-100"
+        [(ngModel)]="task_object.task_status"
+        [options]="status_values"
+        optionLabel="name"
+      ></p-dropdown>
     </div>
-    <div class="flex justify-content-end gap-2">
-        <button label="Cancel" severity="secondary" (onClick)="visible = false"></button>
-        <button label="Save" (onClick)="visible = false"></button>
+  </div>
+  <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-3">
+    <div class="col-12 col-lg-6">
+      <label for="email" class="fw-semibold w-6rem">Start Date</label>
+      <p-calendar [(ngModel)]="task_object.start_date" />
     </div>
+    <div class="col-12 col-lg-6">
+    <label for="email" class="fw-semibold w-6rem">End Date</label>
+    <p-calendar [(ngModel)]="task_object.end_date" />
+    </div>
+  </div>
+
+  <div class="flex justify-content-end gap-2">
+    <button
+     class="cancel-btn"
+      severity="secondary"
+      (onClick)="visible = false"
+    >Cancel</button>
+    <button class="save-btn" (onClick)="visible = false">Save</button>
+  </div>
 </p-dialog>

@@ -1,0 +1,20 @@
+
+::ng-deep .p-dropdown {
+    width: 100% !important;
+}
+
+.p-inputtext.p-component {
+    width: 100% !important;
+}
+
+::ng-deep .p-calendar {
+    width: 100% !important;
+}
+
+::ng-deep ul.p-dropdown-items {
+    padding-left: 0 !important;
+}
+
+label {
+    margin-bottom: 5px;
+}
