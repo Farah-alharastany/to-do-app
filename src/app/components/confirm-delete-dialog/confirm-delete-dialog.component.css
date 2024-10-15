@@ -1,0 +1,18 @@
+::ng-deep #confirm-delete-dialog .p-dialog .p-dialog-header {
+    border-bottom: none !important;
+}
+
+.title {
+    color: var(--dark-blue);
+    font-size: 30px;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.sm-text {
+    color: black;
+    font-size: 13px;
+    padding: 0 14px;
+    text-align: center;
+    font-weight: 400;
+}

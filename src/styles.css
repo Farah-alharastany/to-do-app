@@ -7,12 +7,14 @@
     --secondary-light-blue: #47BFFF;
     --blue-color: #0438A7;
     --darken-blue-color: #0b2c74;
+    --dark-blue: #1F2937;
     --green: #2BC48A;
     --gray: #6B7280;
     --light-gray: #E1E3E4;
     --darken-light-gray: #b0b3b4;
     --lighter-gray: #ECECEC;
     --red: #FF554A;
+    --darken-red: #da4339;
     --yellow: #FFD431;
 }
 
@@ -99,13 +101,24 @@ button {
     background: var(--darken-blue-color);
 }
 
-.cancel-btn {
+.secondary-btn {
     background: var(--light-gray);
     color: black;
     border-radius: 5px;
     padding: 10px 20px;
 }
 
-.cancel-btn:hover {
+.secondary-btn:hover {
     background: var(--darken-light-gray);
+}
+
+.delete-btn {
+    background: var(--red);
+    color: white;
+    border-radius: 5px;
+    padding: 10px 25px;
+}
+
+.delete-btn:hover {
+    background: var(--darken-red);
 }

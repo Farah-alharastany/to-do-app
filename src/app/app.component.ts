@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
 import { UpdateDialogComponent } from './components/update-dialog/update-dialog.component';
 import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
@@ -8,7 +8,7 @@ import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   @ViewChild(AddDialogComponent) addDialogComponent!: AddDialogComponent;
   @ViewChild(UpdateDialogComponent)
   updateDialogComponent!: UpdateDialogComponent;
@@ -49,36 +49,11 @@ export class AppComponent {
       { field: 'end_date', header: 'End Date' },
       { field: 'actions', header: 'Actions' },
     ];
-    // Initlaize tasks array
-    this.tasks = [
-      {
-        id: 1,
-        task_topic: 'hello',
-        status: 'Completed',
-        priority: 'High',
-        created: new Date('05/14/2022'),
-        end_date: new Date('05/14/2022'),
-      },
-      {
-        id: 2,
-        task_topic: 'hello',
-        status: 'Pending',
-        priority: 'Medium',
-        created: new Date('05/14/2022'),
-        end_date: new Date('05/14/2022'),
-      },
-      {
-        id: 3,
-        task_topic: 'hello',
-        status: 'Pending',
-        priority: 'Low',
-        created: new Date('05/14/2022'),
-        end_date: new Date('05/14/2022'),
-      },
-    ];
-    // Initialize the filtered tasks array with the same data in the tasks array
-    this.filtered_tasks = this.tasks;
   }
+  ngOnInit(): void {
+    this.fetch_tasks();
+  }
+
   title = 'To Do App';
 
   // To handle user click on the status in the filter part
@@ -109,8 +84,11 @@ export class AppComponent {
     }
   }
   fetch_tasks() {
+    console.log(this.tasks);
     this.tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
     this.filtered_tasks = this.tasks;
+    console.log(this.tasks);
+    console.log(this.filtered_tasks);
   }
   add_task(new_task: any) {
     // Get the last task id, to generate a new id for the new task before addition
@@ -131,16 +109,23 @@ export class AppComponent {
       localStorage.setItem('tasks', JSON.stringify(this.tasks));
     }
   }
-  delete_task(task_id: number) {
+  delete_task(deleted_task: any) {
     this.fetch_tasks();
+    const task_id = deleted_task.id;
     let updated_tasks = this.tasks.filter((task) => task.id !== task_id);
     localStorage.setItem('tasks', JSON.stringify(updated_tasks));
     this.fetch_tasks();
   }
+  delete_all(){
+
+  }
+  mark_all_done(){
+    
+  }
   open_add_dilog() {
     this.addDialogComponent.show_dialog();
   }
-  open_apdate_dilog(task: any) {
+  open_update_dilog(task: any) {
     // Pass a copy of the task to the dialog
     this.updateDialogComponent.task_object = { ...task };
     // Find the corresponding priority object from the list
@@ -154,11 +139,12 @@ export class AppComponent {
       (s: any) => s.name === task.status
     );
     this.updateDialogComponent.task_object.status = status || null;
-
+    console.log(this.updateDialogComponent.task_object);
     this.updateDialogComponent.show_dialog();
   }
 
-  open_confirm_delete_dialog() {
+  open_confirm_delete_dialog(task: any) {
+    this.confirmDeleteDialogComponent.task_to_be_deleted = task;
     this.confirmDeleteDialogComponent.show_dialog();
   }
 }

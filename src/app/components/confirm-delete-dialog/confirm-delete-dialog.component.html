@@ -1,15 +1,18 @@
-<p-dialog header="Edit Profile" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
-    <span class="p-text-secondary block mb-5">delete your information.</span>
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="username" class="font-semibold w-6rem">Username</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="email" class="font-semibold w-6rem">Email</label>
-        <input pInputText id="email" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex justify-content-end gap-2">
-        <button label="Cancel" severity="secondary" (onClick)="visible = false"></button>
-        <button label="Save" (onClick)="visible = false"></button>
-    </div>
+<p-dialog
+  id="confirm-delete-dialog"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '25rem' }"
+>
+  <div class="d-flex flex-column align-items-center justify-content-center">
+    <img src="/assets/icons/delete-lg.svg" />
+    <p class="title">Delete</p>
+    <p class="sm-text">
+      Deleting will remove all your information from our database
+    </p>
+  </div>
+  <div class="d-flex justify-content-center gap-2 mt-5 w-100">
+    <button class="delete-btn" (click)="delete_task()">Delete</button>
+    <button class="secondary-btn" (click)="close_dialog()">Cancel</button>
+  </div>
 </p-dialog>
