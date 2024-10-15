@@ -38,7 +38,7 @@
           {{ status }}
         </p>
       </div>
-      <button id="add-btn">Add Task</button>
+      <button id="add-btn" (click)="open_add_dilog()">Add Task</button>
     </div>
     <p-table
       [value]="filtered_tasks"
@@ -73,10 +73,17 @@
           <td class="d-flex align-items-center justify-content-between">
             <img class="cursor-pointer" src="/assets/icons/edit.svg" />
             <img class="cursor-pointer" src="/assets/icons/check.svg" />
-            <img class="cursor-pointer" src="/assets/icons/delete.svg" />
+            <img
+              class="cursor-pointer"
+              (click)="open_confirm_delete_dialog()"
+              src="/assets/icons/delete.svg"
+            />
           </td>
         </tr>
       </ng-template>
     </p-table>
   </div>
+  <!-- app.component.html -->
+  <app-add-dialog></app-add-dialog>
+  <app-confirm-delete-dialog></app-confirm-delete-dialog>
 </div>

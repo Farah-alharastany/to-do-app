@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
+import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
+  @ViewChild(AddDialogComponent) addDialogComponent!: AddDialogComponent;
+  @ViewChild(ConfirmDeleteDialogComponent)
+  confirmDeleteDialogComponent!: ConfirmDeleteDialogComponent;
+
   selected_status: String = '';
   task_status_filter: Array<string> = [];
   columns: Array<{ field: string; header: string }> = [];
@@ -59,7 +65,7 @@ export class AppComponent {
         end_date: new Date('05/14/2022'),
       },
       {
-        id: 2,
+        id: 3,
         task_topic: 'hello',
         status: 'Pending',
         priority: 'Low',
@@ -87,7 +93,7 @@ export class AppComponent {
       );
     }
   }
-
+  // To get the background color of the priorty value
   get_priorty_class(priority: String) {
     if (priority === 'High') {
       return 'high-priority';
@@ -98,5 +104,26 @@ export class AppComponent {
     } else {
       return '';
     }
+  }
+  fetch_tasks() {
+    this.tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    this.filtered_tasks = this.tasks;
+  }
+  add_task(new_task: any) {
+    this.tasks.push(new_task);
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    this.fetch_tasks();
+  }
+  delete_task(task_id: number) {
+    this.fetch_tasks();
+    let updated_tasks = this.tasks.filter((task) => task.id !== task_id);
+    localStorage.setItem('tasks', JSON.stringify(updated_tasks));
+    this.fetch_tasks();
+  }
+  open_add_dilog() {
+    this.addDialogComponent.show_dialog();
+  }
+  open_confirm_delete_dialog() {
+    this.confirmDeleteDialogComponent.show_dialog();
   }
 }
