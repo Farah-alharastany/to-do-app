@@ -5,8 +5,12 @@
 
 :root {
     --light-blue: #6F90D8;
+    --secondary-light-blue: #47BFFF;
     --blue-color: #0438A7;
     --green: #2BC48A;
+    --gray: #6B7280;
+    --red:#FF554A;
+    --yellow: #FFD431;
 }
 
 body,
@@ -19,9 +23,8 @@ h6 {
     font-family: 'Poppins', sans-serif !important;
 }
 
-.img-flex {
-    flex-shrink: 0;
-    /* Prevent image from shrinking */
+.cursor-pointer{
+    cursor: pointer;
 }
 
 .p-checkbox .p-checkbox-box {

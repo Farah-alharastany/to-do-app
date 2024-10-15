@@ -1,5 +1,5 @@
 .top-section {
-    background-color: #0438A7;
+    background-color: var(--blue-color);
     padding-bottom: 30px;
     height: 18rem !important;
     width: 100%;
@@ -38,7 +38,49 @@ input[type="text"].custom-input-search:focus {
 }
 
 
-.tasks-container{
+.tasks-container {
     margin-top: -10rem;
     border-radius: 20px;
+}
+
+.active-item {
+    color: var(--blue-color)
+}
+
+.inactive-item {
+    color: var(--gray)
+}
+
+.inactive-item:hover {
+    color: var(--blue-color)
+}
+
+#add-btn {
+    background-color: var(--blue-color);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.priority-text {
+    padding: 8px 25px;
+    text-align: center;
+    color: white;
+    border-radius: 30px;
+    height: fit-content;
+    width: fit-content;
+}
+
+.high-priority {
+    background: var(--red)
+}
+
+.medium-priority {
+    background: var(--yellow)
+}
+
+.low-priority {
+    background: var(--secondary-light-blue)
 }
