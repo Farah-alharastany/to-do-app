@@ -1,17 +1,17 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-add-dialog',
-  templateUrl: './add-dialog.component.html',
-  styleUrls: ['./add-dialog.component.css'],
+  selector: 'app-update-dialog',
+  templateUrl: './update-dialog.component.html',
+  styleUrls: ['./update-dialog.component.css'],
 })
-export class AddDialogComponent implements OnInit {
+export class UpdateDialogComponent implements OnInit {
   visible: boolean;
   task_object: any;
   status_values: any;
   priorities_values: any;
   // Create an output event emitter to send task_object to the parent component
-  @Output() task_added = new EventEmitter<any>();
+  @Output() task_updated = new EventEmitter<any>();
 
   constructor() {
     this.visible = false;
@@ -53,10 +53,10 @@ export class AddDialogComponent implements OnInit {
   }
 
   // Emit the task_object when "Save" button is clicked
-  add_task() {
+  update_task() {
     this.extract_priority_value();
     this.extract_status_value();
-    this.task_added.emit(this.task_object); // Emit the task object
+    this.task_updated.emit(this.task_object); // Emit the task object
     this.close_dialog(); // Close the dialog after emitting
   }
 }

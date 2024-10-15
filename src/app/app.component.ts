@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
+import { UpdateDialogComponent } from './components/update-dialog/update-dialog.component';
 import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
@@ -9,6 +10,8 @@ import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog
 })
 export class AppComponent {
   @ViewChild(AddDialogComponent) addDialogComponent!: AddDialogComponent;
+  @ViewChild(UpdateDialogComponent)
+  updateDialogComponent!: UpdateDialogComponent;
   @ViewChild(ConfirmDeleteDialogComponent)
   confirmDeleteDialogComponent!: ConfirmDeleteDialogComponent;
 
@@ -110,9 +113,23 @@ export class AppComponent {
     this.filtered_tasks = this.tasks;
   }
   add_task(new_task: any) {
+    // Get the last task id, to generate a new id for the new task before addition
+    const last_task =
+      this.tasks.length > 0 ? this.tasks[this.tasks.length - 1] : null;
+    const new_id = last_task ? last_task.id + 1 : 1;
+    new_task.id = new_id;
+
     this.tasks.push(new_task);
     localStorage.setItem('tasks', JSON.stringify(this.tasks));
     this.fetch_tasks();
+  }
+  update_task(updated_task: any) {
+    const task_id = updated_task.id;
+    const task_index = this.tasks.findIndex((task) => task.id === task_id);
+    if (task_index !== -1) {
+      this.tasks[task_index] = { ...updated_task };
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    }
   }
   delete_task(task_id: number) {
     this.fetch_tasks();
@@ -123,6 +140,24 @@ export class AppComponent {
   open_add_dilog() {
     this.addDialogComponent.show_dialog();
   }
+  open_apdate_dilog(task: any) {
+    // Pass a copy of the task to the dialog
+    this.updateDialogComponent.task_object = { ...task };
+    // Find the corresponding priority object from the list
+    const priority = this.updateDialogComponent.priorities_values.find(
+      (p: any) => p.name === task.priority
+    );
+    this.updateDialogComponent.task_object.priority = priority || null;
+
+    // Find the corresponding status object from the list
+    const status = this.updateDialogComponent.status_values.find(
+      (s: any) => s.name === task.status
+    );
+    this.updateDialogComponent.task_object.status = status || null;
+
+    this.updateDialogComponent.show_dialog();
+  }
+
   open_confirm_delete_dialog() {
     this.confirmDeleteDialogComponent.show_dialog();
   }

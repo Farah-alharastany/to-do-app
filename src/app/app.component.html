@@ -23,7 +23,9 @@
     </div>
   </div>
   <div class="tasks-container container w-75 p-5 bg-white shadow-lg">
-    <div class="top-part d-flex justify-content-between align-items-center">
+    <div
+      class="top-part d-flex justify-content-between align-items-center mb-5"
+    >
       <div
         class="filter-section d-flex justify-content-start align-items-center gap-4"
       >
@@ -71,8 +73,14 @@
           <td>{{ task.created | date : "MM/dd/yyyy" }}</td>
           <td>{{ task.end_date | date : "MM/dd/yyyy" }}</td>
           <td class="d-flex align-items-center justify-content-between">
-            <img class="cursor-pointer" src="/assets/icons/edit.svg" />
-            <img class="cursor-pointer" src="/assets/icons/check.svg" />
+            <img
+              class="cursor-pointer"
+              (click)="open_apdate_dilog(task)"
+              src="/assets/icons/edit.svg"
+            />
+            
+            <img *ngIf="task.status === 'Pending'" class="cursor-pointer" src="/assets/icons/check.svg" />
+            <img *ngIf="task.status === 'Completed'" src="/assets/icons/check-green.svg" />
             <img
               class="cursor-pointer"
               (click)="open_confirm_delete_dialog()"
@@ -84,6 +92,7 @@
     </p-table>
   </div>
   <!-- app.component.html -->
-  <app-add-dialog></app-add-dialog>
+  <app-add-dialog (task_added)="add_task($event)"></app-add-dialog>
+  <app-update-dialog (task_updated)="update_task($event)"></app-update-dialog>
   <app-confirm-delete-dialog></app-confirm-delete-dialog>
 </div>

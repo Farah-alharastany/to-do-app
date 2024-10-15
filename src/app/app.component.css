@@ -64,6 +64,10 @@ input[type="text"].custom-input-search:focus {
     font-weight: 600;
 }
 
+#add-btn:hover {
+    background-color: var(--darken-blue-color);
+}
+
 .priority-text {
     padding: 8px 25px;
     text-align: center;

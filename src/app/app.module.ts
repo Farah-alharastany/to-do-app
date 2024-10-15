@@ -18,11 +18,13 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 // App components
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
+import { UpdateDialogComponent } from './components/update-dialog/update-dialog.component';
 import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
     AddDialogComponent,
+    UpdateDialogComponent,
     ConfirmDeleteDialogComponent,
   ],
   imports: [

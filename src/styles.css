@@ -6,9 +6,12 @@
     --light-blue: #6F90D8;
     --secondary-light-blue: #47BFFF;
     --blue-color: #0438A7;
+    --darken-blue-color: #0b2c74;
     --green: #2BC48A;
     --gray: #6B7280;
     --light-gray: #E1E3E4;
+    --darken-light-gray: #b0b3b4;
+    --lighter-gray: #ECECEC;
     --red: #FF554A;
     --yellow: #FFD431;
 }
@@ -81,19 +84,28 @@ p-dropdown {
     display: block;
 }
 
-button{
+button {
     border: none;
 }
-.save-btn {
+
+.primary-btn {
     background: var(--blue-color);
     color: white;
-    border-radius: 10px;
-    padding: 7px 15px;
+    border-radius: 5px;
+    padding: 10px 25px;
+}
+
+.primary-btn:hover {
+    background: var(--darken-blue-color);
 }
 
 .cancel-btn {
     background: var(--light-gray);
     color: black;
-    border-radius: 10px;
-    padding: 7px 15px;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+.cancel-btn:hover {
+    background: var(--darken-light-gray);
 }
