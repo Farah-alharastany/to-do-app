@@ -44,7 +44,7 @@
     </div>
     <p-table
       [value]="filtered_tasks"
-      [(selection)]="selectedTasks"
+      [(selection)]="selected_tasks"
       dataKey="id"
       selectionMode="multiple"
       [tableStyle]="{ 'min-width': '50rem' }"
@@ -82,6 +82,7 @@
             <img
               *ngIf="task.status === 'Pending'"
               class="cursor-pointer"
+              (click)="mark_complete(task)"
               src="/assets/icons/check.svg"
             />
             <img
@@ -97,11 +98,11 @@
         </tr>
       </ng-template>
     </p-table>
-    <div class="d-flex justify-content-end gap-2 mt-5 w-100">
+    <div *ngIf="filtered_tasks" class="d-flex justify-content-end gap-2 mt-5 w-100">
       <button class="secondary-btn" (click)="mark_all_done()">
         Mark all done
       </button>
-      <button class="delete-btn" (click)="delete_all()">Delete all</button>
+      <button class="delete-btn" (click)="open_confirm_delete_dialog()">Delete all</button>
     </div>
   </div>
   <!-- app.component.html -->
@@ -109,5 +110,6 @@
   <app-update-dialog (task_updated)="update_task($event)"></app-update-dialog>
   <app-confirm-delete-dialog
     (task_deleted)="delete_task($event)"
+    (selected_task_deleted)="delete_all()"
   ></app-confirm-delete-dialog>
 </div>
