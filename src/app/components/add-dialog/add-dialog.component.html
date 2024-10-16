@@ -5,7 +5,7 @@
   [style]="{ width: '75%' }"
 >
   <form [formGroup]="task_form" (ngSubmit)="add_task()">
-    <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-5">
+    <div class="d-flex flex-lg-nowrap flex-wrap align-items-start gap-2 mt-5">
       <div class="col-12 col-lg-6">
         <label for="task_topic" class="fw-semibold">Task Topic</label>
         <input
@@ -21,7 +21,9 @@
             task_form.get('task_topic')?.invalid
           "
         >
-          <small *ngIf="task_form.get('task_topic')?.errors"
+          <small
+            class="warning-text"
+            *ngIf="task_form.get('task_topic')?.errors"
             >Task Topic is required.</small
           >
         </div>

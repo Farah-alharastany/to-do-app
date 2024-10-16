@@ -22,7 +22,7 @@ export class AddDialogComponent implements OnInit {
     this.task_form = new FormGroup({
       id: new FormControl(0),
       task_topic: new FormControl('', Validators.required),
-      status: new FormControl('', Validators.required),
+      status: new FormControl({ name: 'Pending', code: 'Pending' }), // Default value set to 'Pending'
       priority: new FormControl('', Validators.required),
       created: new FormControl('', Validators.required),
       end_date: new FormControl('', Validators.required),
@@ -52,9 +52,9 @@ export class AddDialogComponent implements OnInit {
 
   extract_priority_value() {
     // Get the selected priority's name and set it in the form control
-    const selectedPriorityName =
+    const selected_priority_name =
       this.task_form.get('priority')?.value?.name || null;
-    this.task_form.get('priority')?.setValue(selectedPriorityName);
+    this.task_form.get('priority')?.setValue(selected_priority_name);
   }
 
   extract_status_value() {
@@ -79,7 +79,6 @@ export class AddDialogComponent implements OnInit {
     // Check for missing fields and create an error message
     const missing_fields = [];
     if (!new_task.task_topic) missing_fields.push('Task Topic');
-    if (!new_task.status) missing_fields.push('Status');
     if (!new_task.priority) missing_fields.push('Priority');
     if (!new_task.created) missing_fields.push('Created Date');
     if (!new_task.end_date) missing_fields.push('End Date');
@@ -94,7 +93,7 @@ export class AddDialogComponent implements OnInit {
           ', '
         )}.`,
       });
-      return; // Prevent emitting if the task object is invalid
+      return; 
     }
 
     // Emit the task object

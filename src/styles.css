@@ -32,6 +32,10 @@ h6 {
     cursor: pointer;
 }
 
+.warning-text {
+    color: red;
+}
+
 .p-checkbox .p-checkbox-box {
     background: #E9EBEC;
     border: none;

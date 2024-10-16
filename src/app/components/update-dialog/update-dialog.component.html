@@ -4,50 +4,81 @@
   [(visible)]="visible"
   [style]="{ width: '75%' }"
 >
-  <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-5">
-    <div class="col-12 col-lg-6">
-      <label for="username" class="fw-semibold">Task Topic</label>
-      <input
-        class="w-100"
-        pInputText
-        id="username"
-        [(ngModel)]="task_object.task_topic"
-        autocomplete="off"
-      />
+  <form [formGroup]="update_form" (ngSubmit)="update_task()">
+    <div class="d-flex flex-lg-nowrap flex-wrap align-items-start gap-2 mt-5">
+      <div class="col-12 col-lg-6">
+        <label for="task_topic" class="fw-semibold">Task Topic</label>
+        <input
+          class="w-100"
+          pInputText
+          id="task_topic"
+          formControlName="task_topic"
+          autocomplete="off"
+        />
+        <small
+          class="warning-text"
+          *ngIf="update_form.get('task_topic')?.errors"
+          >Task Topic is required.</small
+        >
+      </div>
+      <div class="col-12 col-lg-6">
+        <label for="task_status" class="fw-semibold">Task Status</label>
+        <p-dropdown
+          class="w-100"
+          formControlName="status"
+          [options]="status_values"
+          optionLabel="name"
+        ></p-dropdown>
+      </div>
     </div>
-    <div class="col-12 col-lg-6">
-      <label for="task_status" class="fw-semibold">Task Status</label>
-      <p-dropdown
-        class="w-100"
-        [(ngModel)]="task_object.status"
-        [options]="status_values"
-        optionLabel="name"
-      ></p-dropdown>
+    <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-3">
+      <div class="col-12 col-lg-6">
+        <label for="created" class="fw-semibold w-6rem">Start Date</label>
+        <p-calendar formControlName="created"></p-calendar>
+        <small
+          class="warning-text"
+          *ngIf="
+            update_form.get('created')?.invalid &&
+            update_form.get('created')?.touched
+          "
+          >Start date is required.</small
+        >
+      </div>
+      <div class="col-12 col-lg-6">
+        <label for="end_date" class="fw-semibold w-6rem">End Date</label>
+        <p-calendar formControlName="end_date"></p-calendar>
+        <small
+          class="warning-text"
+          *ngIf="
+            update_form.get('end_date')?.invalid &&
+            update_form.get('end_date')?.touched
+          "
+          >Start date is required.</small
+        >
+      </div>
     </div>
-  </div>
-  <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-3">
-    <div class="col-12 col-lg-6">
-      <label for="email" class="fw-semibold w-6rem">Start Date</label>
-      <p-calendar [(ngModel)]="task_object.created" />
+    <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-3">
+      <div class="col-12 col-lg-6">
+        <label for="task_priority" class="fw-semibold">Task Priority</label>
+        <p-dropdown
+          class="w-100"
+          formControlName="priority"
+          [options]="priorities_values"
+          optionLabel="name"
+        ></p-dropdown>
+      </div>
     </div>
-    <div class="col-12 col-lg-6">
-      <label for="email" class="fw-semibold w-6rem">End Date</label>
-      <p-calendar [(ngModel)]="task_object.end_date" />
+    <div class="d-flex justify-content-end gap-2 mt-5 w-100 flex-wrap">
+      <button class="secondary-btn" type="button" (click)="close_dialog()">
+        Cancel
+      </button>
+      <button
+        class="primary-btn"
+        type="submit"
+        [disabled]="update_form.invalid"
+      >
+        Save
+      </button>
     </div>
-  </div>
-  <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-3">
-    <div class="col-12 col-lg-6">
-      <label for="task_status" class="fw-semibold">Task Priority</label>
-      <p-dropdown
-        class="w-100"
-        [(ngModel)]="task_object.priority"
-        [options]="priorities_values"
-        optionLabel="name"
-      ></p-dropdown>
-    </div>
-  </div>
-  <div class="d-flex justify-content-end gap-2 mt-5 w-100 flex-wrap">
-    <button class="secondary-btn" (click)="close_dialog()">Cancel</button>
-    <button class="primary-btn" (click)="update_task()">Save</button>
-  </div>
+  </form>
 </p-dialog>

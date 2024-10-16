@@ -116,15 +116,14 @@ export class AppComponent implements OnInit {
   }
   add_task(new_task: any) {
     if (!new_task) {
-      console.error('Received task is undefined or null.');
       this.messageService.add({
         severity: 'error',
         summary: 'Task Incompletion',
         detail:
           'Please ensure that all required task details are filled out before proceeding.',
       });
-
-      return; // Early exit if new_task is undefined
+      // Early exit if new_task is undefined
+      return;
     }
 
     // Generate a new id for the task if it's not provided
@@ -136,21 +135,37 @@ export class AppComponent implements OnInit {
 
     this.tasks.push(new_task);
     localStorage.setItem('tasks', JSON.stringify(this.tasks));
+
+    this.fetch_tasks();
     this.messageService.add({
       severity: 'success',
       summary: 'Success',
       detail: 'Task successfully added',
     });
-
-    this.fetch_tasks();
   }
 
   update_task(updated_task: any) {
+    if (!updated_task) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Task Incompletion',
+        detail:
+          'Please ensure that all required task details are filled out before proceeding.',
+      });
+    }
+    console.log('Task updated');
     const task_id = updated_task.id;
+    console.log(task_id);
+
     const task_index = this.tasks.findIndex((task) => task.id === task_id);
     if (task_index !== -1) {
       this.tasks[task_index] = { ...updated_task };
       localStorage.setItem('tasks', JSON.stringify(this.tasks));
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Task successfully updated',
+      });
     }
   }
   delete_task(deleted_task: any) {
@@ -228,35 +243,24 @@ export class AppComponent implements OnInit {
   open_add_dilog() {
     this.addDialogComponent.show_dialog();
   }
-  open_update_dilog(task: any) {
-    // Pass a copy of the task to the dialog
-    this.updateDialogComponent.task_object = { ...task };
+  open_update_dialog(task: any) {
+    // Update the form controls with the task data
+    this.updateDialogComponent.update_form.patchValue({
+      id: task.id,
+      task_topic: task.task_topic,
+      status:
+        this.updateDialogComponent.status_values.find(
+          (s: any) => s.name === task.status
+        ) || null,
+      priority:
+        this.updateDialogComponent.priorities_values.find(
+          (p: any) => p.name === task.priority
+        ) || null,
+      created: task.created ? new Date(task.created) : null,
+      end_date: task.end_date ? new Date(task.end_date) : null,
+    });
 
-    // Convert the date strings to Date objects
-    if (this.updateDialogComponent.task_object.created) {
-      this.updateDialogComponent.task_object.created = new Date(
-        this.updateDialogComponent.task_object.created
-      );
-    }
-    if (this.updateDialogComponent.task_object.end_date) {
-      this.updateDialogComponent.task_object.end_date = new Date(
-        this.updateDialogComponent.task_object.end_date
-      );
-    }
-
-    // Find the corresponding priority object from the list
-    const priority = this.updateDialogComponent.priorities_values.find(
-      (p: any) => p.name === task.priority
-    );
-    this.updateDialogComponent.task_object.priority = priority || null;
-
-    // Find the corresponding status object from the list
-    const status = this.updateDialogComponent.status_values.find(
-      (s: any) => s.name === task.status
-    );
-    this.updateDialogComponent.task_object.status = status || null;
-
-    console.log(this.updateDialogComponent.task_object);
+    // Show the dialog
     this.updateDialogComponent.show_dialog();
   }
 
