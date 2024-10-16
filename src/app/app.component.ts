@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
     end_date: Date;
   }> = [];
   selected_tasks: any;
+  search_query: any;
   constructor() {
     // To store user selected status for filteration
     this.selected_status = 'All Task';
@@ -70,6 +71,12 @@ export class AppComponent implements OnInit {
         (task) => task.status === this.selected_status
       );
     }
+  }
+  on_search() {
+    const lower_query = this.search_query.toLowerCase();
+    this.filtered_tasks = this.tasks.filter((task) =>
+      task.task_topic.toLowerCase().includes(lower_query)
+    );
   }
   // To get the background color of the priorty value
   get_priorty_class(priority: String) {

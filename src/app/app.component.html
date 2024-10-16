@@ -10,6 +10,8 @@
               class="custom-input-seacrh"
               type="text"
               placeholder="Search"
+              [(ngModel)]="search_query"
+              (input)="on_search()"
             />
           </div>
         </div>
@@ -98,11 +100,16 @@
         </tr>
       </ng-template>
     </p-table>
-    <div *ngIf="filtered_tasks" class="d-flex justify-content-end gap-2 mt-5 w-100">
+    <div
+      *ngIf="filtered_tasks"
+      class="d-flex justify-content-end gap-2 mt-5 w-100"
+    >
       <button class="secondary-btn" (click)="mark_all_done()">
         Mark all done
       </button>
-      <button class="delete-btn" (click)="open_confirm_delete_dialog()">Delete all</button>
+      <button class="delete-btn" (click)="open_confirm_delete_dialog()">
+        Delete all
+      </button>
     </div>
   </div>
   <!-- app.component.html -->
