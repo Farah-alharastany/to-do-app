@@ -78,22 +78,23 @@
           <td>{{ task.created | date : "MM/dd/yyyy" }}</td>
           <td>{{ task.end_date | date : "MM/dd/yyyy" }}</td>
           <td class="d-flex align-items-center justify-content-between">
-            <img
-              class="cursor-pointer"
-              (click)="open_update_dilog(task)"
-              src="/assets/icons/edit.svg"
-            />
-
-            <img
-              *ngIf="task.status === 'Pending'"
-              class="cursor-pointer"
-              (click)="mark_complete(task)"
-              src="/assets/icons/check.svg"
-            />
-            <img
-              *ngIf="task.status === 'Completed'"
-              src="/assets/icons/check-green.svg"
-            />
+            <div class="icon-container">
+              <img
+                class="cursor-pointer"
+                (click)="open_update_dilog(task)"
+                src="/assets/icons/edit-pen.svg"
+              />
+            </div>
+            <div *ngIf="task.status === 'Pending'" class="icon-container">
+              <img
+                class="cursor-pointer"
+                (click)="mark_complete(task)"
+                src="/assets/icons/check-blue.svg"
+              />
+            </div>
+            <div *ngIf="task.status === 'Completed'" class="icon-container">
+              <img src="/assets/icons/check-green.svg" />
+            </div>
             <img
               class="cursor-pointer"
               (click)="open_confirm_delete_dialog(task)"

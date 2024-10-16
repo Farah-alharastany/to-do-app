@@ -89,32 +89,12 @@ input[type="text"].custom-input-search:focus {
     background: var(--secondary-light-blue)
 }
 
-
-/* Dark mode styles */
-.dark-mode .main {
-    background-color: #343a40;
-    color: #f8f9fa;
+.icon-container{
+    border-radius: 5px;
+    height: 30px;
+    width: 30px;
+    background: #F2F3F5 ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-.dark-mode .bg-white {
-    background-color: #495057 !important;
-}
-
-.dark-mode .btn,
-.dark-mode .form-control {
-    background-color: #6c757d;
-    color: #f8f9fa;
-    border-color: #6c757d;
-}
-
-.dark-mode .custom-input-search {
-    background-color: #343a40;
-    color: #f8f9fa;
-    border-color: #6c757d;
-}
-
-.dark-mode .navbar {
-    background-color: #495057;
-    border-bottom: 1px solid #6c757d;
-}
-

@@ -155,5 +155,116 @@ body.dark-mode td .priority-text {
 }
 
 body.dark-mode .p-datatable .p-datatable-thead>tr>th {
-    border-color: #9c9ca0 !important;
+    border-color: #5f5f61 !important;
+}
+
+body.dark-mode .p-checkbox .p-checkbox-box {
+    background: #5f5f61 !important;
+}
+
+body.dark-mode .p-checkbox .p-checkbox-box.p-highlight {
+    background: #5f5f61 !important;
+}
+
+body.dark-mode .p-checkbox .p-checkbox-box .p-checkbox-icon {
+    color: white;
+}
+
+body.dark-mode .p-dialog .p-dialog-content,
+body.dark-mode .p-dialog .p-dialog-header {
+    background: #2c2b34;
+    border: none;
+}
+
+body.dark-mode label {
+    color: white
+}
+
+body.dark-mode input.p-element,
+body.dark-mode .p-dropdown {
+    background-color: #5f5f61 !important;
+    border: none;
+}
+
+body.dark-mode .p-dropdown .p-dropdown-trigger {
+    color: #9c9ca0;
+}
+
+body.dark-mode .p-dropdown-items {
+    background-color: #5f5f61;
+    color: white;
+}
+
+body.dark-mode .p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover {
+    background-color: #9c9ca0;
+}
+
+body.dark-mode .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+
+    color: white;
+}
+
+body.dark-mode .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled).p-focus {
+    background: #8c8d90;
+}
+
+.p-dropdown-items-wrapper {
+    overflow: unset;
+}
+
+body.dark-mode .p-inputtext {
+    color: white;
+}
+
+body.dark-mode .p-dialog .p-dialog-header {
+    color: white;
+    border-bottom: 1px solid #5f5f61 !important;
+}
+
+body.dark-mode th,
+body.dark-mode td {
+    color: white !important;
+}
+
+body.dark-mode .p-datepicker:not(.p-datepicker-inline) {
+    background: #5f5f61;
+}
+
+body.dark-mode .p-datepicker table td.p-datepicker-today>span {
+    background: #d1d5db;
+    color: #4b5563;
+}
+
+body.dark-mode .p-datepicker .p-datepicker-header {
+    color: white;
+    background: #5f5f61 !important;
+    border-bottom: 1px solid gray;
+}
+
+body.dark-mode span.p-ripple.p-element:hover {
+    color: black;
+}
+
+body.dark-mode .p-datepicker .p-datepicker-header .p-datepicker-prev,
+body.dark-mode .p-datepicker .p-datepicker-header .p-datepicker-next {
+    color: #9c9ca0;
+}
+
+body.dark-mode button.p-datepicker-month.p-link,
+body.dark-mode button.p-datepicker-year.p-link {
+    color: white;
+}
+
+body.dark-mode .p-datepicker {
+    margin-top: -100px !important;
+}
+
+body.dark-mode p.title,
+body.dark-mode p.sm-text {
+    color: white
+}
+
+body.dark-mode button.p-element.p-ripple.p-dialog-header-icon.p-dialog-header-close.p-link.p-button.p-component:hover {
+    color: white;
+    background: #4b4747;
 }
