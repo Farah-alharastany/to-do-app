@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { Task } from '../../models/task';
+import { DropdownOptions } from '../../models/dropdown-options';
 
 @Component({
   selector: 'app-add-dialog',
@@ -10,9 +12,9 @@ import { MessageService } from 'primeng/api';
 })
 export class AddDialogComponent implements OnInit {
   visible: boolean;
-  task_object: any;
-  status_values: any;
-  priorities_values: any;
+  task_object: Task[] = [];
+  status_values: DropdownOptions[] = [];
+  priorities_values: DropdownOptions[] = [];
   task_form: FormGroup;
 
   @Output() task_added = new EventEmitter<any>();
@@ -93,7 +95,7 @@ export class AddDialogComponent implements OnInit {
           ', '
         )}.`,
       });
-      return; 
+      return;
     }
 
     // Emit the task object

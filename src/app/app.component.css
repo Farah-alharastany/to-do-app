@@ -66,32 +66,44 @@ input[type="text"].custom-input-search:focus {
 .inactive-item:hover {
     color: var(--blue-color)
 }
+
 .filter-section {
-  max-width: 100%; /* Ensure it does not exceed parent width */
-  white-space: nowrap; /* Prevent wrapping of items */
+    max-width: 100%;
+    /* Ensure it does not exceed parent width */
+    white-space: nowrap;
+    /* Prevent wrapping of items */
 }
 
-@media (max-width: 576px) { /* For small screens */
-  .filter-section {
-    overflow-x: auto; /* Allow horizontal scrolling */
-    scroll-behavior: smooth; /* Smooth scrolling */
-  }
+@media (max-width: 576px) {
+
+    /* For small screens */
+    .filter-section {
+        overflow-x: auto;
+        /* Allow horizontal scrolling */
+        scroll-behavior: smooth;
+        /* Smooth scrolling */
+    }
 }
 
-@media (min-width: 577px) { /* For larger screens */
-  .filter-section {
-    overflow-x: hidden; /* Hide overflow on larger screens */
-  }
+@media (min-width: 577px) {
+
+    /* For larger screens */
+    .filter-section {
+        overflow-x: hidden;
+        /* Hide overflow on larger screens */
+    }
 }
 
 /* Optional: Custom scrollbar styling for WebKit browsers */
 .filter-section::-webkit-scrollbar {
-  height: 6px; /* Set the height of the scrollbar */
+    height: 6px;
+    /* Set the height of the scrollbar */
 }
 
 .filter-section::-webkit-scrollbar-thumb {
-  background-color: #007bff; /* Customize scrollbar color */
-  border-radius: 10px;
+    background-color: #007bff;
+    /* Customize scrollbar color */
+    border-radius: 10px;
 }
 
 #add-btn {
@@ -133,6 +145,16 @@ input[type="text"].custom-input-search:focus {
     height: 30px;
     width: 30px;
     background: #F2F3F5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-icon-container {
+    border-radius: 5px;
+    height: 30px;
+    width: 30px;
+    background: var(--red);
     display: flex;
     align-items: center;
     justify-content: center;

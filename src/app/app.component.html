@@ -37,12 +37,14 @@
                 class="pi pi-sun"
                 pTooltip="Light mood"
                 tooltipPosition="bottom"
+                style="font-size: 20px"
               ></i>
               <i
                 *ngIf="!is_dark_mode"
                 class="pi pi-moon text-white"
                 pTooltip="Dark mood"
                 tooltipPosition="bottom"
+                style="font-size: 20px"
               ></i>
             </div>
           </div>
@@ -104,28 +106,28 @@
             <td>{{ task.created | date : "MM/dd/yyyy" }}</td>
             <td>{{ task.end_date | date : "MM/dd/yyyy" }}</td>
             <td class="d-flex align-items-center justify-content-between">
-              <div class="icon-container">
-                <img
-                  class="cursor-pointer"
-                  (click)="open_update_dialog(task)"
-                  src="/assets/icons/edit-pen.svg"
-                />
+              <div
+                class="icon-container cursor-pointer"
+                (click)="open_update_dialog(task)"
+              >
+                <img src="/assets/icons/edit-pen.svg" />
               </div>
-              <div *ngIf="task.status === 'Pending'" class="icon-container">
-                <img
-                  class="cursor-pointer"
-                  (click)="mark_complete(task)"
-                  src="/assets/icons/check-blue.svg"
-                />
+              <div
+                *ngIf="task.status === 'Pending'"
+                (click)="mark_complete(task)"
+                class="icon-container cursor-pointer"
+              >
+                <img src="/assets/icons/check-blue.svg" />
               </div>
               <div *ngIf="task.status === 'Completed'" class="icon-container">
                 <img src="/assets/icons/check-green.svg" />
               </div>
-              <img
-                class="cursor-pointer"
+              <div
+                class="delete-icon-container cursor-pointer"
                 (click)="open_confirm_delete_dialog(task)"
-                src="/assets/icons/delete.svg"
-              />
+              >
+                <img src="/assets/icons/delete.svg" />
+              </div>
             </td>
           </tr>
         </ng-template>

@@ -3,6 +3,7 @@ import { AddDialogComponent } from './components/add-dialog/add-dialog.component
 import { UpdateDialogComponent } from './components/update-dialog/update-dialog.component';
 import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
 import { MessageService } from 'primeng/api';
+import { Task } from './models/task';
 
 @Component({
   selector: 'app-root',
@@ -20,24 +21,10 @@ export class AppComponent implements OnInit {
   selected_status: String = '';
   task_status_filter: Array<string> = [];
   columns: Array<{ field: string; header: string }> = [];
-  tasks: Array<{
-    id: any;
-    task_topic: string;
-    status: string;
-    priority: string;
-    created: Date;
-    end_date: Date;
-  }> = [];
-  filtered_tasks: Array<{
-    id: any;
-    task_topic: string;
-    status: string;
-    priority: string;
-    created: Date;
-    end_date: Date;
-  }> = [];
-  selected_tasks: any;
-  search_query: any;
+  tasks: Task[] = [];
+  filtered_tasks: Task[] = [];
+  selected_tasks: Task[] = [];
+  search_query: String = "";
   is_dark_mode: boolean;
   constructor(
     private renderer: Renderer2,
@@ -92,9 +79,10 @@ export class AppComponent implements OnInit {
   on_search() {
     const lower_query = this.search_query.toLowerCase();
     this.filtered_tasks = this.tasks.filter((task) =>
-      task.task_topic.toLowerCase().includes(lower_query)
+      task.task_topic.toLowerCase().startsWith(lower_query)
     );
   }
+
   // To get the background color of the priorty value
   get_priorty_class(priority: String) {
     if (priority === 'High') {
