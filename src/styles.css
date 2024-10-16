@@ -90,6 +90,10 @@ p-dropdown {
     display: block;
 }
 
+::ng-deep .p-datepicker {
+    margin-top: -150px !important;
+}
+
 button {
     border: none;
 }
@@ -259,9 +263,6 @@ body.dark-mode button.p-datepicker-year.p-link {
     color: white;
 }
 
-body.dark-mode .p-datepicker {
-    margin-top: -100px !important;
-}
 
 body.dark-mode p.title,
 body.dark-mode p.sm-text {

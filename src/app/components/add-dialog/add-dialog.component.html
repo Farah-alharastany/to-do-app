@@ -1,4 +1,5 @@
 <p-dialog
+  [contentStyle]="{ overflow: 'visible' }"
   header="Add Task"
   [modal]="true"
   [(visible)]="visible"
@@ -31,6 +32,7 @@
       <div class="col-12 col-lg-6">
         <label for="status" class="fw-semibold">Task Status</label>
         <p-dropdown
+          appendTo="body"
           class="w-100"
           formControlName="status"
           [options]="status_values"
@@ -41,17 +43,26 @@
     <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-3">
       <div class="col-12 col-lg-6">
         <label for="created" class="fw-semibold">Start Date</label>
-        <p-calendar formControlName="created" [showIcon]="false"></p-calendar>
+        <p-calendar
+          appendTo="body"
+          formControlName="created"
+          [showIcon]="false"
+        ></p-calendar>
       </div>
       <div class="col-12 col-lg-6">
         <label for="end_date" class="fw-semibold">End Date</label>
-        <p-calendar formControlName="end_date" [showIcon]="false"></p-calendar>
+        <p-calendar
+          appendTo="body"
+          formControlName="end_date"
+          [showIcon]="false"
+        ></p-calendar>
       </div>
     </div>
     <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-3">
       <div class="col-12 col-lg-6">
         <label for="priority" class="fw-semibold">Task Priority</label>
         <p-dropdown
+          appendTo="body"
           class="w-100"
           formControlName="priority"
           [options]="priorities_values"
