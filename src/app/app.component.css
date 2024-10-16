@@ -3,6 +3,7 @@
     padding-bottom: 30px;
     height: 18rem !important;
     width: 100%;
+    display: relative;
 }
 
 .search-container {
@@ -27,7 +28,10 @@
 ::placeholder {
     color: var(--light-blue)
 }
-
+.light-dark-switcher{
+    display: absolute;
+    top: 200px;
+}
 input[type="text"].custom-input-search:focus {
     outline: none !important;
     border: none !important;
