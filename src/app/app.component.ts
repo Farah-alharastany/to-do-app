@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, Renderer2 } from '@angular/core';
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
 import { UpdateDialogComponent } from './components/update-dialog/update-dialog.component';
 import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
@@ -36,7 +36,8 @@ export class AppComponent implements OnInit {
   }> = [];
   selected_tasks: any;
   search_query: any;
-  constructor() {
+  is_dark_mode: boolean;
+  constructor(private renderer: Renderer2) {
     // To store user selected status for filteration
     this.selected_status = 'All Task';
     // All tasks' status
@@ -50,9 +51,20 @@ export class AppComponent implements OnInit {
       { field: 'end_date', header: 'End Date' },
       { field: 'actions', header: 'Actions' },
     ];
+    this.is_dark_mode = false;
   }
   ngOnInit(): void {
     this.fetch_tasks();
+    // Check the current mode dark/light
+    const dark_mode = localStorage.getItem('dark_mode');
+
+    if (dark_mode === 'true') {
+      this.is_dark_mode = true;
+      this.renderer.addClass(document.body, 'dark-mode');
+    } else {
+      this.is_dark_mode = false;
+      this.renderer.removeClass(document.body, 'dark-mode');
+    }
   }
 
   title = 'To Do App';
@@ -202,5 +214,16 @@ export class AppComponent implements OnInit {
       this.confirmDeleteDialogComponent.is_selection_deletion = true;
     }
     this.confirmDeleteDialogComponent.show_dialog();
+  }
+  toggle_dark_mode() {
+    this.is_dark_mode = !this.is_dark_mode;
+
+    if (this.is_dark_mode) {
+      this.renderer.addClass(document.body, 'dark-mode');
+      localStorage.setItem('dark_mode', 'true'); // Store dark mode state
+    } else {
+      this.renderer.removeClass(document.body, 'dark-mode');
+      localStorage.setItem('dark_mode', 'false'); // Store light mode state
+    }
   }
 }

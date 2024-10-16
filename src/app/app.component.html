@@ -2,6 +2,9 @@
   <div class="top-section">
     <div class="container w-75 pt-5">
       <div class="row justify-content-between">
+        <button class="btn btn-toggle-dark" (click)="toggle_dark_mode()">
+          {{ is_dark_mode ? "Light Mode" : "Dark Mode" }}
+        </button>
         <div class="col text-white fw-medium">Task</div>
         <div class="col search-box">
           <div class="search-container">

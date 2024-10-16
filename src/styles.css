@@ -122,3 +122,38 @@ button {
 .delete-btn:hover {
     background: var(--darken-red);
 }
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #17161f;
+    color: #f8f9fa;
+}
+
+body.dark-mode .tasks-container {
+    background-color: #2c2b34 !important;
+}
+
+body.dark-mode .active-item {
+    color: white !important;
+}
+
+body.dark-mode .inactive-item {
+    color: #9c9ca0;
+}
+
+body.dark-mode .inactive-item:hover {
+    color: white !important;
+}
+
+body.dark-mode th,
+body.dark-mode td {
+    color: white !important;
+}
+
+body.dark-mode td .priority-text {
+    color: #1F2937 !important;
+}
+
+body.dark-mode .p-datatable .p-datatable-thead>tr>th {
+    border-color: #9c9ca0 !important;
+}
