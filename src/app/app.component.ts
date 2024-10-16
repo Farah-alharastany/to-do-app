@@ -1,9 +1,17 @@
-import { Component, ViewChild, OnInit, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  OnInit,
+  Renderer2,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
 import { UpdateDialogComponent } from './components/update-dialog/update-dialog.component';
 import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
 import { MessageService } from 'primeng/api';
 import { Task } from './models/task';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -24,11 +32,12 @@ export class AppComponent implements OnInit {
   tasks: Task[] = [];
   filtered_tasks: Task[] = [];
   selected_tasks: Task[] = [];
-  search_query: String = "";
+  search_query: String = '';
   is_dark_mode: boolean;
   constructor(
     private renderer: Renderer2,
-    private messageService: MessageService
+    private messageService: MessageService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     // To store user selected status for filteration
     this.selected_status = 'All Task';
@@ -96,11 +105,13 @@ export class AppComponent implements OnInit {
     }
   }
   fetch_tasks() {
-    console.log(this.tasks);
-    this.tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-    this.filtered_tasks = this.tasks;
-    console.log(this.tasks);
-    console.log(this.filtered_tasks);
+    if (isPlatformBrowser(this.platformId)) {
+      console.log(this.tasks);
+      this.tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+      this.filtered_tasks = this.tasks;
+      console.log(this.tasks);
+      console.log(this.filtered_tasks);
+    }
   }
   add_task(new_task: any) {
     if (!new_task) {
