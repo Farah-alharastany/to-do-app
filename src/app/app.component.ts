@@ -1,17 +1,9 @@
-import {
-  Component,
-  ViewChild,
-  OnInit,
-  Renderer2,
-  Inject,
-  PLATFORM_ID,
-} from '@angular/core';
+import { Component, ViewChild, OnInit, Renderer2 } from '@angular/core';
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
 import { UpdateDialogComponent } from './components/update-dialog/update-dialog.component';
 import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
 import { MessageService } from 'primeng/api';
 import { Task } from './models/task';
-import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -36,8 +28,7 @@ export class AppComponent implements OnInit {
   is_dark_mode: boolean;
   constructor(
     private renderer: Renderer2,
-    private messageService: MessageService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    private messageService: MessageService
   ) {
     // To store user selected status for filteration
     this.selected_status = 'All Task';
@@ -55,16 +46,13 @@ export class AppComponent implements OnInit {
     this.is_dark_mode = false;
   }
   ngOnInit(): void {
-    this.fetch_tasks();
-    // Check the current mode dark/light
-    const dark_mode = localStorage.getItem('dark_mode');
-
-    if (dark_mode === 'true') {
-      this.is_dark_mode = true;
-      this.renderer.addClass(document.body, 'dark-mode');
+    if (typeof window === 'undefined') {
+      console.log('The window object is not available in this environment.');
     } else {
-      this.is_dark_mode = false;
-      this.renderer.removeClass(document.body, 'dark-mode');
+      console.log(window.localStorage); // This will throw an error on the server side
+      this.fetch_tasks();
+      // Check the current mode dark/light
+      this.apply_user_theme();
     }
   }
 
@@ -74,6 +62,17 @@ export class AppComponent implements OnInit {
   handle_status_selection(status: String) {
     this.selected_status = status;
     this.filter_tasks();
+  }
+  apply_user_theme() {
+    const dark_mode = localStorage.getItem('dark_mode');
+
+    if (dark_mode === 'true') {
+      this.is_dark_mode = true;
+      this.renderer.addClass(document.body, 'dark-mode');
+    } else {
+      this.is_dark_mode = false;
+      this.renderer.removeClass(document.body, 'dark-mode');
+    }
   }
   // To update filtered tasks array
   filter_tasks() {
@@ -105,13 +104,11 @@ export class AppComponent implements OnInit {
     }
   }
   fetch_tasks() {
-    if (isPlatformBrowser(this.platformId)) {
-      console.log(this.tasks);
-      this.tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-      this.filtered_tasks = this.tasks;
-      console.log(this.tasks);
-      console.log(this.filtered_tasks);
-    }
+    console.log(this.tasks);
+    this.tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    this.filtered_tasks = this.tasks;
+    console.log(this.tasks);
+    console.log(this.filtered_tasks);
   }
   add_task(new_task: any) {
     if (!new_task) {
