@@ -23,8 +23,18 @@
               class="cursor-pointer light-dark-switcher ms-3"
               (click)="toggle_dark_mode()"
             >
-              <i *ngIf="is_dark_mode" class="pi pi-sun"></i>
-              <i *ngIf="!is_dark_mode" class="pi pi-moon text-white"></i>
+              <i
+                *ngIf="is_dark_mode"
+                class="pi pi-sun"
+                pTooltip="Light mood"
+                tooltipPosition="bottom"
+              ></i>
+              <i
+                *ngIf="!is_dark_mode"
+                class="pi pi-moon text-white"
+                pTooltip="Dark mood"
+                tooltipPosition="bottom"
+              ></i>
             </div>
           </div>
         </div>

@@ -16,6 +16,7 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
+import { TooltipModule } from 'primeng/tooltip';
 // App components
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
 import { UpdateDialogComponent } from './components/update-dialog/update-dialog.component';
@@ -37,6 +38,7 @@ import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog
     InputTextModule,
     CalendarModule,
     DropdownModule,
+    TooltipModule,
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],
