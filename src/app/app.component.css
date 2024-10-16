@@ -1,9 +1,16 @@
 .top-section {
-    background-color: var(--blue-color);
     padding-bottom: 30px;
-    height: 18rem !important;
     width: 100%;
     display: relative;
+}
+
+.bg-blue-section {
+    background-color: var(--blue-color);
+    height: 15rem;
+    position: absolute;
+    top: 0;
+    z-index: -10;
+    width: 100%;
 }
 
 .search-container {
@@ -28,10 +35,12 @@
 ::placeholder {
     color: var(--light-blue)
 }
-.light-dark-switcher{
+
+.light-dark-switcher {
     display: absolute;
     top: 200px;
 }
+
 input[type="text"].custom-input-search:focus {
     outline: none !important;
     border: none !important;
@@ -43,7 +52,6 @@ input[type="text"].custom-input-search:focus {
 
 
 .tasks-container {
-    margin-top: -10rem;
     border-radius: 20px;
 }
 
@@ -58,7 +66,44 @@ input[type="text"].custom-input-search:focus {
 .inactive-item:hover {
     color: var(--blue-color)
 }
+.filter-section {
+    max-width: 100%;
+    /* Ensure it does not exceed parent width */
+    white-space: nowrap;
+    /* Prevent wrapping of items */
+}
 
+@media (max-width: 576px) {
+
+    /* For small screens */
+    .filter-section {
+        overflow-x: auto;
+        /* Allow horizontal scrolling */
+        scroll-behavior: smooth;
+        /* Smooth scrolling */
+    }
+}
+
+@media (min-width: 577px) {
+
+    /* For larger screens */
+    .filter-section {
+        overflow-x: hidden;
+        /* Hide overflow on larger screens */
+    }
+}
+
+/* Optional: Custom scrollbar styling for WebKit browsers */
+.filter-section::-webkit-scrollbar {
+    height: 6px;
+    /* Set the height of the scrollbar */
+}
+
+.filter-section::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    /* Customize scrollbar color */
+    border-radius: 10px;
+}
 #add-btn {
     background-color: var(--blue-color);
     color: white;
@@ -93,11 +138,11 @@ input[type="text"].custom-input-search:focus {
     background: var(--secondary-light-blue)
 }
 
-.icon-container{
+.icon-container {
     border-radius: 5px;
     height: 30px;
     width: 30px;
-    background: #F2F3F5 ;
+    background: #F2F3F5;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -1,9 +1,14 @@
 <div class="main">
   <div class="top-section">
-    <div class="container w-75 pt-5">
+    <div class="bg-blue-section"></div>
+    <div class="container w-lg-75 w-100 px-lg-5 px-4 pt-5">
       <div class="row justify-content-between">
-        <div class="col text-white fw-medium">Task</div>
-        <div class="col search-box">
+        <div
+          class="col-12 col-lg order-lg-1 order-2 mt-lg-0 mt-4 text-white fw-medium"
+        >
+          Task
+        </div>
+        <div class="col-12 col-lg order-lg-2 order-3 mt-lg-0 mt-2 search-box">
           <div class="search-container">
             <img src="/assets/icons/search.svg" />
             <input
@@ -15,8 +20,10 @@
             />
           </div>
         </div>
-        <div class="col text-white user-info">
-          <div class="d-flex align-items-center">
+        <div
+          class="col-12 col-lg order-lg-3 order-1 foat-start text-white user-info"
+        >
+          <div class="d-flex align-items-center justify-content-lg-end justify-content-center">
             <img class="me-3" src="/assets/images/avatar.png" />
             <span class="fw-medium">Mahmoud Ahmed</span>
             <div
@@ -41,95 +48,104 @@
       </div>
     </div>
   </div>
-  <div class="tasks-container container w-75 p-5 bg-white shadow-lg mb-5">
-    <div
-      class="top-part d-flex justify-content-between align-items-center mb-5"
-    >
+  <div class="w-lg-75 w-100 px-lg-5 px-4">
+    <div class="tasks-container container p-lg-5 p-4 bg-white shadow-lg mb-5">
       <div
-        class="filter-section d-flex justify-content-start align-items-center gap-4"
+        class="top-part d-flex justify-content-between align-items-center mb-5 flex-lg-nowrap flex-wrap flex-lg-row flex-column-reverse"
       >
-        <p
-          class="fw-medium cursor-pointer"
-          *ngFor="let status of task_status_filter"
-          [ngClass]="
-            selected_status === status ? 'active-item' : 'inactive-item'
-          "
-          (click)="handle_status_selection(status)"
+        <div
+          class="filter-section d-flex justify-content-start align-items-center gap-4 mt-lg-0 mt-4"
         >
-          {{ status }}
-        </p>
+          <p
+            class="fw-medium cursor-pointer"
+            *ngFor="let status of task_status_filter"
+            [ngClass]="
+              selected_status === status ? 'active-item' : 'inactive-item'
+            "
+            (click)="handle_status_selection(status)"
+          >
+            {{ status }}
+          </p>
+        </div>
+        <button
+          id="add-btn"
+          class="ms-auto"
+          (click)="open_add_dilog()"
+        >
+          Add Task
+        </button>
       </div>
-      <button id="add-btn" (click)="open_add_dilog()">Add Task</button>
-    </div>
-    <p-table
-      [value]="filtered_tasks"
-      [(selection)]="selected_tasks"
-      dataKey="id"
-      selectionMode="multiple"
-      [tableStyle]="{ 'min-width': '50rem' }"
-    >
-      <ng-template pTemplate="header">
-        <tr>
-          <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
-          <th *ngFor="let column of columns">{{ column.header }}</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-task>
-        <tr>
-          <td>
-            <p-tableCheckbox [value]="task" />
-          </td>
-          <td>{{ task.task_topic }}</td>
-          <td>{{ task.status }}</td>
-          <td>
-            <p
-              class="priority-text"
-              [ngClass]="get_priorty_class(task.priority)"
-            >
-              {{ task.priority }}
-            </p>
-          </td>
-          <td>{{ task.created | date : "MM/dd/yyyy" }}</td>
-          <td>{{ task.end_date | date : "MM/dd/yyyy" }}</td>
-          <td class="d-flex align-items-center justify-content-between">
-            <div class="icon-container">
+      <p-table
+        [value]="filtered_tasks"
+        [(selection)]="selected_tasks"
+        dataKey="id"
+        selectionMode="multiple"
+        [tableStyle]="{ 'min-width': '50rem' }"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
+            <th *ngFor="let column of columns">{{ column.header }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-task>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="task" />
+            </td>
+            <td>{{ task.task_topic }}</td>
+            <td>{{ task.status }}</td>
+            <td>
+              <p
+                class="priority-text"
+                [ngClass]="get_priorty_class(task.priority)"
+              >
+                {{ task.priority }}
+              </p>
+            </td>
+            <td>{{ task.created | date : "MM/dd/yyyy" }}</td>
+            <td>{{ task.end_date | date : "MM/dd/yyyy" }}</td>
+            <td class="d-flex align-items-center justify-content-between">
+              <div class="icon-container">
+                <img
+                  class="cursor-pointer"
+                  (click)="open_update_dilog(task)"
+                  src="/assets/icons/edit-pen.svg"
+                />
+              </div>
+              <div *ngIf="task.status === 'Pending'" class="icon-container">
+                <img
+                  class="cursor-pointer"
+                  (click)="mark_complete(task)"
+                  src="/assets/icons/check-blue.svg"
+                />
+              </div>
+              <div *ngIf="task.status === 'Completed'" class="icon-container">
+                <img src="/assets/icons/check-green.svg" />
+              </div>
               <img
                 class="cursor-pointer"
-                (click)="open_update_dilog(task)"
-                src="/assets/icons/edit-pen.svg"
+                (click)="open_confirm_delete_dialog(task)"
+                src="/assets/icons/delete.svg"
               />
-            </div>
-            <div *ngIf="task.status === 'Pending'" class="icon-container">
-              <img
-                class="cursor-pointer"
-                (click)="mark_complete(task)"
-                src="/assets/icons/check-blue.svg"
-              />
-            </div>
-            <div *ngIf="task.status === 'Completed'" class="icon-container">
-              <img src="/assets/icons/check-green.svg" />
-            </div>
-            <img
-              class="cursor-pointer"
-              (click)="open_confirm_delete_dialog(task)"
-              src="/assets/icons/delete.svg"
-            />
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-    <div
-      *ngIf="filtered_tasks"
-      class="d-flex justify-content-end gap-2 mt-5 w-100"
-    >
-      <button class="secondary-btn" (click)="mark_all_done()">
-        Mark all done
-      </button>
-      <button class="delete-btn" (click)="open_confirm_delete_dialog()">
-        Delete all
-      </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <div
+        *ngIf="filtered_tasks"
+        class="d-flex justify-content-end gap-2 mt-5 w-100 flex-wrap"
+      >
+        <button class="secondary-btn" (click)="mark_all_done()">
+          Mark all done
+        </button>
+        <button class="delete-btn" (click)="open_confirm_delete_dialog()">
+          Delete all
+        </button>
+      </div>
     </div>
   </div>
+
   <!-- app.component.html -->
   <app-add-dialog (task_added)="add_task($event)"></app-add-dialog>
   <app-update-dialog (task_updated)="update_task($event)"></app-update-dialog>
