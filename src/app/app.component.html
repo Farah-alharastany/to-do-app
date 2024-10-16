@@ -58,6 +58,7 @@
         class="top-part d-flex justify-content-between align-items-center mb-5 flex-lg-nowrap flex-wrap flex-lg-row flex-column-reverse"
       >
         <div
+          *ngIf="tasks && tasks.length > 0"
           class="filter-section d-flex justify-content-start align-items-center gap-4 mt-lg-0 mt-4"
         >
           <p
@@ -75,7 +76,18 @@
           Add Task
         </button>
       </div>
+      <div
+        *ngIf="tasks.length === 0"
+        class="no-tasks-container d-flex flex-column align-items-center"
+      >
+        <img class="w-50" src="/assets/images/start.svg" alt="Start now" />
+        <p class="mt-5">
+          You have no tasks yet! Start adding some to stay organized.
+        </p>
+      </div>
+
       <p-table
+        *ngIf="tasks && tasks.length > 0"
         [value]="filtered_tasks"
         [(selection)]="selected_tasks"
         dataKey="id"
@@ -133,7 +145,7 @@
         </ng-template>
       </p-table>
       <div
-        *ngIf="filtered_tasks"
+        *ngIf="filtered_tasks && filtered_tasks.length > 0"
         class="d-flex justify-content-end gap-2 mt-5 w-100 flex-wrap"
       >
         <button class="secondary-btn" (click)="mark_all_done()">

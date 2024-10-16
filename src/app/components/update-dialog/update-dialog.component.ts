@@ -21,7 +21,7 @@ export class UpdateDialogComponent implements OnInit {
     this.update_form = new FormGroup({
       id: new FormControl(0),
       task_topic: new FormControl('', Validators.required),
-      status: new FormControl('Pending'), // Default value for status
+      status: new FormControl('Pending', Validators.required), // Default value for status
       priority: new FormControl('', Validators.required),
       created: new FormControl('', Validators.required),
       end_date: new FormControl('', Validators.required),
@@ -69,7 +69,7 @@ export class UpdateDialogComponent implements OnInit {
     }
     this.extract_status_value();
     this.extract_priority_value();
-    
+
     const updated_task = {
       ...this.update_form.value, // Get the updated values
     };

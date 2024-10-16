@@ -81,6 +81,7 @@ export class AddDialogComponent implements OnInit {
     // Check for missing fields and create an error message
     const missing_fields = [];
     if (!new_task.task_topic) missing_fields.push('Task Topic');
+    if (!new_task.priority) missing_fields.push('Status');
     if (!new_task.priority) missing_fields.push('Priority');
     if (!new_task.created) missing_fields.push('Created Date');
     if (!new_task.end_date) missing_fields.push('End Date');
@@ -100,6 +101,13 @@ export class AddDialogComponent implements OnInit {
 
     // Emit the task object
     this.task_added.emit(new_task);
+
+    // Reset the form after emitting
+    this.task_form.reset();
+    this.task_form
+      .get('status')
+      ?.setValue({ name: 'Pending', code: 'Pending' });
+
     this.close_dialog(); // Close the dialog after emitting
   }
 }
