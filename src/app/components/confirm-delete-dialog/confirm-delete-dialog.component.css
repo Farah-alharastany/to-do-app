@@ -16,3 +16,7 @@
     text-align: center;
     font-weight: 400;
 }
+
+:host ::ng-deep .p-dialog {
+    margin: 0 20px !important;
+}
