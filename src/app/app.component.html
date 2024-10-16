@@ -23,7 +23,9 @@
         <div
           class="col-12 col-lg order-lg-3 order-1 foat-start text-white user-info"
         >
-          <div class="d-flex align-items-center justify-content-lg-end justify-content-center">
+          <div
+            class="d-flex align-items-center justify-content-lg-end justify-content-center"
+          >
             <img class="me-3" src="/assets/images/avatar.png" />
             <span class="fw-medium">Mahmoud Ahmed</span>
             <div
@@ -67,11 +69,7 @@
             {{ status }}
           </p>
         </div>
-        <button
-          id="add-btn"
-          class="ms-auto"
-          (click)="open_add_dilog()"
-        >
+        <button id="add-btn" class="ms-auto" (click)="open_add_dilog()">
           Add Task
         </button>
       </div>
@@ -153,4 +151,5 @@
     (task_deleted)="delete_task($event)"
     (selected_task_deleted)="delete_all()"
   ></app-confirm-delete-dialog>
+  <p-toast></p-toast>
 </div>

@@ -4,50 +4,65 @@
   [(visible)]="visible"
   [style]="{ width: '75%' }"
 >
-  <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-5">
-    <div class="col-12 col-lg-6">
-      <label for="username" class="fw-semibold">Task Topic</label>
-      <input
-        class="w-100"
-        pInputText
-        id="username"
-        [(ngModel)]="task_object.task_topic"
-        autocomplete="off"
-      />
+  <form [formGroup]="task_form" (ngSubmit)="add_task()">
+    <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-5">
+      <div class="col-12 col-lg-6">
+        <label for="task_topic" class="fw-semibold">Task Topic</label>
+        <input
+          class="w-100"
+          pInputText
+          id="task_topic"
+          formControlName="task_topic"
+          autocomplete="off"
+        />
+        <div
+          *ngIf="
+            task_form.get('task_topic')?.touched &&
+            task_form.get('task_topic')?.invalid
+          "
+        >
+          <small *ngIf="task_form.get('task_topic')?.errors"
+            >Task Topic is required.</small
+          >
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <label for="status" class="fw-semibold">Task Status</label>
+        <p-dropdown
+          class="w-100"
+          formControlName="status"
+          [options]="status_values"
+          optionLabel="name"
+        ></p-dropdown>
+      </div>
     </div>
-    <div class="col-12 col-lg-6">
-      <label for="task_status" class="fw-semibold">Task Status</label>
-      <p-dropdown
-        class="w-100"
-        [(ngModel)]="task_object.status"
-        [options]="status_values"
-        optionLabel="name"
-      ></p-dropdown>
+    <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-3">
+      <div class="col-12 col-lg-6">
+        <label for="created" class="fw-semibold">Start Date</label>
+        <p-calendar formControlName="created" [showIcon]="false"></p-calendar>
+      </div>
+      <div class="col-12 col-lg-6">
+        <label for="end_date" class="fw-semibold">End Date</label>
+        <p-calendar formControlName="end_date" [showIcon]="false"></p-calendar>
+      </div>
     </div>
-  </div>
-  <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-3">
-    <div class="col-12 col-lg-6">
-      <label for="email" class="fw-semibold w-6rem">Start Date</label>
-      <p-calendar [(ngModel)]="task_object.created" />
+    <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-3">
+      <div class="col-12 col-lg-6">
+        <label for="priority" class="fw-semibold">Task Priority</label>
+        <p-dropdown
+          class="w-100"
+          formControlName="priority"
+          [options]="priorities_values"
+          optionLabel="name"
+        ></p-dropdown>
+      </div>
     </div>
-    <div class="col-12 col-lg-6">
-      <label for="email" class="fw-semibold w-6rem">End Date</label>
-      <p-calendar [(ngModel)]="task_object.end_date" />
+    <div class="d-flex justify-content-end gap-2 mt-5 w-100 flex-wrap">
+      <button type="button" class="secondary-btn" (click)="close_dialog()">
+        Cancel
+      </button>
+      <button type="submit" class="primary-btn">Save</button>
     </div>
-  </div>
-  <div class="d-flex flex-lg-nowrap flex-wrap align-items-center gap-2 mt-3">
-    <div class="col-12 col-lg-6">
-      <label for="task_status" class="fw-semibold">Task Priority</label>
-      <p-dropdown
-        class="w-100"
-        [(ngModel)]="task_object.priority"
-        [options]="priorities_values"
-        optionLabel="name"
-      ></p-dropdown>
-    </div>
-  </div>
-  <div class="d-flex justify-content-end gap-2 mt-5 w-100 flex-wrap">
-    <button class="secondary-btn" (click)="close_dialog()">Cancel</button>
-    <button class="primary-btn" (click)="add_task()">Save</button>
-  </div>
+  </form>
+  <p-toast></p-toast>
 </p-dialog>

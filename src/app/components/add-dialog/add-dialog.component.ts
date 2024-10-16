@@ -1,27 +1,34 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-add-dialog',
   templateUrl: './add-dialog.component.html',
   styleUrls: ['./add-dialog.component.css'],
+  providers: [MessageService],
 })
 export class AddDialogComponent implements OnInit {
   visible: boolean;
   task_object: any;
   status_values: any;
   priorities_values: any;
-  // Create an output event emitter to send task_object to the parent component
+  task_form: FormGroup;
+
   @Output() task_added = new EventEmitter<any>();
 
-  constructor() {
+  constructor(private messageService: MessageService) {
+    // Initialize form controls directly
+    this.task_form = new FormGroup({
+      id: new FormControl(0),
+      task_topic: new FormControl('', Validators.required),
+      status: new FormControl('', Validators.required),
+      priority: new FormControl('', Validators.required),
+      created: new FormControl('', Validators.required),
+      end_date: new FormControl('', Validators.required),
+    });
+
     this.visible = false;
-    this.task_object = {
-      task_topic: null,
-      status: null,
-      priority: null,
-      created: null,
-      end_date: null,
-    };
     this.status_values = [
       { name: 'Completed', code: 'Completed' },
       { name: 'Pending', code: 'Pending' },
@@ -42,21 +49,56 @@ export class AddDialogComponent implements OnInit {
   close_dialog() {
     this.visible = false;
   }
-  // Extract the name of the priority
+
   extract_priority_value() {
-    this.task_object.priority = this.task_object.priority?.name;
+    // Get the selected priority's name and set it in the form control
+    const selectedPriorityName =
+      this.task_form.get('priority')?.value?.name || null;
+    this.task_form.get('priority')?.setValue(selectedPriorityName);
   }
 
-  // Extract the name of the status
   extract_status_value() {
-    this.task_object.status = this.task_object.status?.name;
+    // Get the selected status's name and set it in the form control
+    const selected_status_name =
+      this.task_form.get('status')?.value?.name || null;
+    this.task_form.get('status')?.setValue(selected_status_name);
   }
-
-  // Emit the task_object when "Save" button is clicked
   add_task() {
     this.extract_priority_value();
     this.extract_status_value();
-    this.task_added.emit(this.task_object); // Emit the task object
+
+    // Create the task object from the form values
+    const new_task = {
+      task_topic: this.task_form.get('task_topic')?.value,
+      status: this.task_form.get('status')?.value,
+      priority: this.task_form.get('priority')?.value,
+      created: this.task_form.get('created')?.value,
+      end_date: this.task_form.get('end_date')?.value,
+    };
+
+    // Check for missing fields and create an error message
+    const missing_fields = [];
+    if (!new_task.task_topic) missing_fields.push('Task Topic');
+    if (!new_task.status) missing_fields.push('Status');
+    if (!new_task.priority) missing_fields.push('Priority');
+    if (!new_task.created) missing_fields.push('Created Date');
+    if (!new_task.end_date) missing_fields.push('End Date');
+
+    // If there are missing fields, display an error message
+    if (missing_fields.length > 0) {
+      console.error('Form is invalid:', new_task);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Task Incompletion',
+        detail: `Please fill out the following required fields: ${missing_fields.join(
+          ', '
+        )}.`,
+      });
+      return; // Prevent emitting if the task object is invalid
+    }
+
+    // Emit the task object
+    this.task_added.emit(new_task);
     this.close_dialog(); // Close the dialog after emitting
   }
 }

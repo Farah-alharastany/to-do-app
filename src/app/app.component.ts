@@ -2,11 +2,13 @@ import { Component, ViewChild, OnInit, Renderer2 } from '@angular/core';
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
 import { UpdateDialogComponent } from './components/update-dialog/update-dialog.component';
 import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog/confirm-delete-dialog.component';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
+  providers: [MessageService],
 })
 export class AppComponent implements OnInit {
   @ViewChild(AddDialogComponent) addDialogComponent!: AddDialogComponent;
@@ -37,7 +39,10 @@ export class AppComponent implements OnInit {
   selected_tasks: any;
   search_query: any;
   is_dark_mode: boolean;
-  constructor(private renderer: Renderer2) {
+  constructor(
+    private renderer: Renderer2,
+    private messageService: MessageService
+  ) {
     // To store user selected status for filteration
     this.selected_status = 'All Task';
     // All tasks' status
@@ -110,16 +115,36 @@ export class AppComponent implements OnInit {
     console.log(this.filtered_tasks);
   }
   add_task(new_task: any) {
-    // Get the last task id, to generate a new id for the new task before addition
-    const last_task =
-      this.tasks.length > 0 ? this.tasks[this.tasks.length - 1] : null;
-    const new_id = last_task ? last_task.id + 1 : 1;
-    new_task.id = new_id;
+    if (!new_task) {
+      console.error('Received task is undefined or null.');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Task Incompletion',
+        detail:
+          'Please ensure that all required task details are filled out before proceeding.',
+      });
+
+      return; // Early exit if new_task is undefined
+    }
+
+    // Generate a new id for the task if it's not provided
+    if (!new_task.id) {
+      const last_task =
+        this.tasks.length > 0 ? this.tasks[this.tasks.length - 1] : null;
+      new_task.id = last_task ? last_task.id + 1 : 1; // Generate new id
+    }
 
     this.tasks.push(new_task);
     localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Task successfully added',
+    });
+
     this.fetch_tasks();
   }
+
   update_task(updated_task: any) {
     const task_id = updated_task.id;
     const task_index = this.tasks.findIndex((task) => task.id === task_id);
@@ -132,6 +157,11 @@ export class AppComponent implements OnInit {
     const task_id = deleted_task.id;
     let updated_tasks = this.tasks.filter((task) => task.id !== task_id);
     localStorage.setItem('tasks', JSON.stringify(updated_tasks));
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Task successfully deleted',
+    });
     this.fetch_tasks();
   }
   mark_complete(task: any) {
@@ -157,19 +187,42 @@ export class AppComponent implements OnInit {
       this.tasks = this.tasks.filter((task) => !selected_ids.has(task.id));
 
       localStorage.setItem('tasks', JSON.stringify(this.tasks));
-
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Selected tasks successfully deleted',
+      });
       this.fetch_tasks();
+      // Clear the selected tasks array
+      this.selected_tasks = [];
     }
   }
 
   mark_all_done() {
-    this.selected_tasks.forEach((task: any) => {
-      // Directly iterate over selected_tasks
-      task.status = 'Completed';
-    });
+    if (this.selected_tasks && this.selected_tasks.length > 0) {
+      this.selected_tasks.forEach((task: any) => {
+        // Directly iterate over selected_tasks
+        task.status = 'Completed';
+      });
 
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
-    this.fetch_tasks();
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Selected tasks have been marked as completed.',
+      });
+      this.fetch_tasks();
+
+      // Clear the selected tasks array
+      this.selected_tasks = [];
+    } else {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'No Tasks Selected',
+        detail: 'Please select at least one task before proceeding.',
+      });
+    }
   }
 
   open_add_dilog() {
@@ -210,10 +263,19 @@ export class AppComponent implements OnInit {
   open_confirm_delete_dialog(task: any = null) {
     if (task) {
       this.confirmDeleteDialogComponent.task_to_be_deleted = task;
+      this.confirmDeleteDialogComponent.show_dialog();
     } else {
-      this.confirmDeleteDialogComponent.is_selection_deletion = true;
+      if (this.selected_tasks && this.selected_tasks.length > 0) {
+        this.confirmDeleteDialogComponent.is_selection_deletion = true;
+        this.confirmDeleteDialogComponent.show_dialog();
+      } else {
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'No Tasks Selected',
+          detail: 'Please select at least one task before proceeding.',
+        });
+      }
     }
-    this.confirmDeleteDialogComponent.show_dialog();
   }
   toggle_dark_mode() {
     this.is_dark_mode = !this.is_dark_mode;

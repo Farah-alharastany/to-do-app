@@ -5,7 +5,7 @@ import {
 } from '@angular/platform-browser';
 // Angular forms module
 import { FormsModule } from '@angular/forms';
-
+import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,6 +17,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { TooltipModule } from 'primeng/tooltip';
+import { ToastModule } from 'primeng/toast';
+
 // App components
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
 import { UpdateDialogComponent } from './components/update-dialog/update-dialog.component';
@@ -33,12 +35,14 @@ import { ConfirmDeleteDialogComponent } from './components/confirm-delete-dialog
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     DialogModule,
     TableModule,
     InputTextModule,
     CalendarModule,
     DropdownModule,
     TooltipModule,
+    ToastModule,
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],
